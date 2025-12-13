@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <Windows.h>
 #include <stddef.h>
@@ -20,7 +20,8 @@ extern "C" {
 // :: Screen information
 LIBAPI void  uwp_GetActualSize(int* x, int* y); // Gets the display resolution
 LIBAPI void  uwp_GetScreenSize(int* x, int* y); // Gets the display resolution OR override from user
-LIBAPI float uwp_GetRefreshRate();
+LIBAPI float uwp_GetRefreshRate(); // Gets the current refresh rate
+LIBAPI float uwp_GetCachedRefreshRate(); // Gets the current refresh rate, but cached
 LIBAPI void* uwp_GetActualWindowReference(); // No cache
 LIBAPI void* uwp_GetWindowReference(); // Cached for threaded rendering
 
