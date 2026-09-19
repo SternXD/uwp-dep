@@ -72,65 +72,6 @@
             /* Private platforms may have their own ideas about entry points. */
             #include "SDL_main_impl_private.h"
 
-        #elif defined(SDL_PLATFORM_WINDOWS)
-
-            /* these defines/typedefs are needed for the WinMain() definition */
-            #ifndef WINAPI
-                #define WINAPI __stdcall
-            #endif
-
-            typedef struct HINSTANCE__ * HINSTANCE;
-            typedef char *LPSTR;
-            typedef wchar_t *PWSTR;
-
-            /* The VC++ compiler needs main/wmain defined, but not for GDK */
-            #if defined(_MSC_VER) && !defined(SDL_PLATFORM_WINRT) && !defined(SDL_PLATFORM_GDK)
-
-                /* This is where execution begins [console apps] */
-                #if defined(UNICODE) && UNICODE
-                    int wmain(int argc, wchar_t *wargv[], wchar_t *wenvp)
-                    {
-                        (void)argc;
-                        (void)wargv;
-                        (void)wenvp;
-                        return SDL_RunApp(0, NULL, SDL_main, NULL);
-                    }
-                #else /* ANSI */
-                    int main(int argc, char *argv[])
-                    {
-                        (void)argc;
-                        (void)argv;
-                        return SDL_RunApp(0, NULL, SDL_main, NULL);
-                    }
-                #endif /* UNICODE */
-
-            #endif /* _MSC_VER && ! SDL_PLATFORM_GDK */
-
-            /* This is where execution begins [windowed apps and GDK] */
-
-            #ifdef __cplusplus
-            extern "C" {
-            #endif
-
-            #if defined(UNICODE) && UNICODE
-            int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrev, PWSTR szCmdLine, int sw)
-            #else /* ANSI */
-            int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw)
-            #endif
-            {
-                (void)hInst;
-                (void)hPrev;
-                (void)szCmdLine;
-                (void)sw;
-                return SDL_RunApp(0, NULL, SDL_main, NULL);
-            }
-
-            #ifdef __cplusplus
-            } /* extern "C" */
-            #endif
-
-            /* end of SDL_PLATFORM_WINDOWS impls */
-
         #elif defined(SDL_PLATFORM_WINRT)
 
             /* WinRT main based on SDL_winrt_main_NonXAML.cpp, placed in the public domain by David Ludwig  3/13/14 */
@@ -191,6 +132,65 @@
 
             /* end of WinRT impl */
 
+        #elif defined(SDL_PLATFORM_WINDOWS)
+
+            /* these defines/typedefs are needed for the WinMain() definition */
+            #ifndef WINAPI
+                #define WINAPI __stdcall
+            #endif
+
+            typedef struct HINSTANCE__ * HINSTANCE;
+            typedef char *LPSTR;
+            typedef wchar_t *PWSTR;
+
+            /* The VC++ compiler needs main/wmain defined, but not for GDK */
+            #if defined(_MSC_VER) && !defined(SDL_PLATFORM_GDK)
+
+                /* This is where execution begins [console apps] */
+                #if defined(UNICODE) && UNICODE
+                    int wmain(int argc, wchar_t *wargv[], wchar_t *wenvp)
+                    {
+                        (void)argc;
+                        (void)wargv;
+                        (void)wenvp;
+                        return SDL_RunApp(0, NULL, SDL_main, NULL);
+                    }
+                #else /* ANSI */
+                    int main(int argc, char *argv[])
+                    {
+                        (void)argc;
+                        (void)argv;
+                        return SDL_RunApp(0, NULL, SDL_main, NULL);
+                    }
+                #endif /* UNICODE */
+
+            #endif /* _MSC_VER && ! SDL_PLATFORM_GDK */
+
+            /* This is where execution begins [windowed apps and GDK] */
+
+            #ifdef __cplusplus
+            extern "C" {
+            #endif
+
+            #if defined(UNICODE) && UNICODE
+            int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrev, PWSTR szCmdLine, int sw)
+            #else /* ANSI */
+            int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw)
+            #endif
+            {
+                (void)hInst;
+                (void)hPrev;
+                (void)szCmdLine;
+                (void)sw;
+                return SDL_RunApp(0, NULL, SDL_main, NULL);
+            }
+
+            #ifdef __cplusplus
+            } /* extern "C" */
+            #endif
+
+            /* end of SDL_PLATFORM_WINDOWS impls */
+
         #else /* platforms that use a standard main() and just call SDL_RunApp(), like iOS and 3DS */
             int main(int argc, char *argv[])
             {
@@ -199,7 +199,7 @@
 
             /* end of impls for standard-conforming platforms */
 
-        #endif /* SDL_PLATFORM_WIN32 etc */
+        #endif /* SDL_PLATFORM_WINRT / WINDOWS / etc */
 
     #endif /* !defined(SDL_MAIN_USE_CALLBACKS) || defined(SDL_MAIN_CALLBACK_STANDARD) */
 

@@ -1573,6 +1573,9 @@ extern SDL_DECLSPEC SDL_Window * SDLCALL SDL_GetWindowParent(SDL_Window *window)
  *
  * - `SDL_PROP_WINDOW_WINRT_WINDOW_POINTER`: the IInspectable CoreWindow
  *   associated with the window
+ * - `SDL_PROP_WINDOW_WINRT_SWAPCHAIN_BACKGROUND_PANEL_POINTER`: the
+ *   ISwapChainBackgroundPanelNative associated with the window, when hosting
+ *   SDL in a XAML SwapChainBackgroundPanel
  *
  * On Windows:
  *
@@ -1653,6 +1656,7 @@ extern SDL_DECLSPEC SDL_PropertiesID SDLCALL SDL_GetWindowProperties(SDL_Window 
 #define SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER                      "SDL.window.vivante.window"
 #define SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER                     "SDL.window.vivante.surface"
 #define SDL_PROP_WINDOW_WINRT_WINDOW_POINTER                        "SDL.window.winrt.window"
+#define SDL_PROP_WINDOW_WINRT_SWAPCHAIN_BACKGROUND_PANEL_POINTER    "SDL.window.winrt.swapchain_background_panel"
 #define SDL_PROP_WINDOW_WIN32_HWND_POINTER                          "SDL.window.win32.hwnd"
 #define SDL_PROP_WINDOW_WIN32_HDC_POINTER                           "SDL.window.win32.hdc"
 #define SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER                      "SDL.window.win32.instance"
