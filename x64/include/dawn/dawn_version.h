@@ -1,4 +1,4 @@
-// Copyright 2023 The Dawn & Tint Authors
+// Copyright 2026 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -25,33 +25,17 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef __EMSCRIPTEN__
-#error "Do not include this header. Use the headers provided by Emdawnwebgpu instead."
-#endif
+#ifndef INCLUDE_DAWN_DAWN_VERSION_H_
+#define INCLUDE_DAWN_DAWN_VERSION_H_
 
-#ifndef WEBGPU_CPP_CHAINED_STRUCT_H_
-#define WEBGPU_CPP_CHAINED_STRUCT_H_
-
-#include <cstddef>
+#include <array>
 #include <cstdint>
 
-// This header file declares the ChainedStruct structures separately from the WebGPU
-// headers so that dependencies can directly extend structures without including the larger header
-// which exposes capabilities that may require correctly set proc tables.
-namespace wgpu {
+namespace dawn {
 
-    enum class SType : uint32_t;
+// The version is a 20-byte SHA1 hash. If the hash is not available, it is all zeros.
+static constexpr std::array<uint8_t, 20> kDawnVersion = { 0xa3, 0x69, 0xa9, 0xcf, 0x6b, 0x3c, 0xea, 0xea, 0x25, 0xc3, 0x4d, 0x63, 0x4d, 0x54, 0xe2, 0xaf, 0x6f, 0x44, 0xa8, 0xb4 };
 
-    struct ChainedStruct {
-        ChainedStruct const * nextInChain = nullptr;
-        SType sType = SType(0u);
-    };
+}  // namespace dawn
 
-    struct ChainedStructOut {
-        ChainedStructOut * nextInChain = nullptr;
-        SType sType = SType(0u);
-    };
-
-}  // namespace wgpu}
-
-#endif // WEBGPU_CPP_CHAINED_STRUCT_H_
+#endif  // INCLUDE_DAWN_DAWN_VERSION_H_
